@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -9,11 +9,29 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+import loginService from "../services/login";
 
 const SignInSide = (match) => {
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const usuario = await loginService.login({ username, password });
+      setUser(usuario);
+      console.log(user);
+      setUsername("");
+      setPassword("");
+    } catch (exception) {
+      setError("Wrong credentials");
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
+    }
+  };
 
   useEffect(() => {}, []);
 
@@ -23,7 +41,7 @@ const SignInSide = (match) => {
         <Header as="h2" color="teal" textAlign="center">
           <Image src="/logo.png" /> Log-in to your account
         </Header>
-        <Form size="large">
+        <Form size="large" onSubmit={handleLogin}>
           <Segment stacked>
             <Form.Input
               fluid
