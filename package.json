@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ripzier/mern-mvc#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.7.5"
   },

@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:5000/api/usuarios";
+const baseUrl = "/api/usuarios";
 
 const login = async (credentials) => {
   const { data } = await axios.post(baseUrl, credentials);
+  console.log(data);
   return data;
 };
 

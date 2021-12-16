@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 exports.list = (req, res) => {
   User.find()
@@ -22,8 +23,13 @@ exports.details = (req, res) => {
     });
 };
 
-exports.create = (req, res) => {
-  const newUser = new User(req.body);
+exports.create = async (req, res) => {
+  const { username, password } = req.body;
+  const passwordHash = await bcrypt.hash(password, 10);
+  const newUser = new User({
+    username,
+    passwordHash,
+  });
   newUser
     .save()
     .then((data) => {
